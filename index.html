@@ -3,18 +3,77 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Redirect to Django App</title>
-    <meta http-equiv="refresh" content="0; url=http://http://110.35.136.20:8000/accounts/login/">
+    <title>빛과도시 Light On</title>
+    <meta http-equiv="refresh" content="3; url=http://110.35.136.20:8000/accounts/login/">
     
     <!-- 또는 JavaScript 리디렉션 -->
     <script>
-        window.location.href = "http://http://110.35.136.20:8000/accounts/login/";
+        // 3초 후 리디렉션
+        setTimeout(function() {
+            window.location.href = "http://110.35.136.20:8000/accounts/login/";
+        }, 3000);
     </script>
     
     <!-- SEO를 위한 링크 (선택사항) -->
     <link rel="canonical" href="http://110.35.136.20:8000/accounts/login/">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <p>리디렉션 중... <a href="http://http://110.35.136.20:8000/accounts/login/">여기를 클릭</a>하세요.</p>
+    <div class="container">
+        <h2>Light On 으로 이동합니다</h2>
+        <div class="loader"></div>
+        <p>3초 후 자동으로 로그인 페이지로 이동합니다...</p>
+        <p>자동으로 이동하지 않으면 <a href="http://110.35.136.20:8000/accounts/login/">여기를 클릭하세요</a>.</p>
+        
+        <div style="margin-top: 30px; font-size: 12px; color: #666;">
+            <p>서버 주소: 110.35.136.20:8000</p>
+            <p>현재 시간: <span id="current-time"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        // 현재 시간 표시
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = 
+                now.toLocaleTimeString('ko-KR');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // 서버 접속 테스트
+        fetch('http://110.35.136.20:8000/accounts/login/', { mode: 'no-cors' })
+            .then(() => console.log('서버 연결 확인'))
+            .catch(() => console.log('서버 연결 실패'));
+    </script>
 </body>
 </html>
