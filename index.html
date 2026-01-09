@@ -2,63 +2,97 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="2;url=http://110.35.136.20:8000/accounts/login/">
-    
-    <script>
-        // 사용자 상호작용 후 리디렉션 (보안 제한 우회)
-        document.addEventListener('DOMContentLoaded', function() {
-            // 페이지 클릭 시 리디렉션
-            document.body.addEventListener('click', function() {
-                window.location.href = 'http://110.35.136.20:8000/accounts/login/';
-            });
-            
-            // 또는 버튼 클릭 유도
-            setTimeout(function() {
-                const btn = document.getElementById('redirect-btn');
-                if (btn) {
-                    btn.style.display = 'block';
-                    btn.focus();
-                }
-            }, 1000);
-        });
-    </script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Dashboard Redirect</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            cursor: pointer;
-        }
-        #redirect-btn {
-            display: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            background: #007acc;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
-        #redirect-btn:hover {
-            background: #005a9c;
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn {
+            background: #00e5ff;
+            color: #1a237e;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.6);
+        }
+        .countdown {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #00e5ff;
         }
     </style>
 </head>
 <body>
-    <h2>Django Dashboard로 이동합니다</h2>
-    <p>자동으로 이동하지 않으면:</p>
-    <p>1. 아무 곳이나 클릭하거나</p>
-    <p>2. 아래 버튼을 클릭하세요</p>
-    
-    <button id="redirect-btn" onclick="window.location.href='http://110.35.136.20:8000/accounts/login/'">
-        ▶ Django 로그인 페이지로 이동
-    </button>
-    
-    <p style="margin-top: 30px; font-size: 12px; color: #666;">
-        또는 직접 접속: <a href="http://110.35.136.20:8000/accounts/login/">http://110.35.136.20:8000/accounts/login/</a>
-    </p>
+    <div class="container">
+        <h1>Django Soft UI Dashboard</h1>
+        <p>실시간 프로젝트 관리 시스템</p>
+        
+        <div class="countdown" id="countdown">5</div>
+        <p>초 후 새 창에서 자동으로 열립니다</p>
+        
+        <button class="btn" id="openBtn" onclick="openDashboard()">
+            ▶ 지금 열기
+        </button>
+        
+        <p style="margin-top: 30px; font-size: 14px; opacity: 0.8;">
+            또는 직접 접속: <br>
+            <a href="http://110.35.136.20:8000/accounts/login/" style="color: #00e5ff;">
+                http://110.35.136.20:8000/accounts/login/
+            </a>
+        </p>
+    </div>
+
+    <script>
+        const DASHBOARD_URL = "http://110.35.136.20:8000/accounts/login/";
+        
+        function openDashboard() {
+            window.open(DASHBOARD_URL, '_blank', 'noopener,noreferrer');
+        }
+        
+        // 카운트다운 후 자동 열기
+        let count = 5;
+        const countdownEl = document.getElementById('countdown');
+        const interval = setInterval(() => {
+            count--;
+            countdownEl.textContent = count;
+            
+            if (count <= 0) {
+                clearInterval(interval);
+                openDashboard();
+                // 사용자에게 클릭 유도 (보안 상호작용)
+                document.getElementById('openBtn').click();
+            }
+        }, 1000);
+        
+        // 페이지 클릭 시 즉시 열기
+        document.body.addEventListener('click', openDashboard);
+    </script>
 </body>
 </html>
