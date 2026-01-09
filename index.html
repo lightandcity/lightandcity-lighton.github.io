@@ -3,34 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Redirecting...</title>
-    <script>
-        // GitHub Pages는 HTTPS, Django는 HTTP
-        // 혼합 콘텐츠(Mixed Content) 차단 우회
-        window.onload = function() {
-            // HTTPS에서 HTTP로 강제 이동
-            if (window.location.protocol === 'https:') {
-                window.location.href = 'http://110.35.136.20:8000/accounts/login/';
-            } else {
-                window.location.href = 'http://110.35.136.20:8000/accounts/login/';
-            }
-        };
-    </script>
+    <meta http-equiv="refresh" content="2;url=http://110.35.136.20:8000/accounts/login/">
     
-    <!-- No-CORS 요청으로 서버 상태 확인 -->
     <script>
-        // 서버 상태 확인 (CORS 문제 우회)
-        fetch('http://110.35.136.20:8000', { 
-            mode: 'no-cors',
-            method: 'HEAD'
-        }).then(() => {
-            console.log('Server is reachable');
-        }).catch(() => {
-            console.log('Server might be blocked');
+        // 사용자 상호작용 후 리디렉션 (보안 제한 우회)
+        document.addEventListener('DOMContentLoaded', function() {
+            // 페이지 클릭 시 리디렉션
+            document.body.addEventListener('click', function() {
+                window.location.href = 'http://110.35.136.20:8000/accounts/login/';
+            });
+            
+            // 또는 버튼 클릭 유도
+            setTimeout(function() {
+                const btn = document.getElementById('redirect-btn');
+                if (btn) {
+                    btn.style.display = 'block';
+                    btn.focus();
+                }
+            }, 1000);
         });
     </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            cursor: pointer;
+        }
+        #redirect-btn {
+            display: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #007acc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px;
+        }
+        #redirect-btn:hover {
+            background: #005a9c;
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to Django Dashboard...</p>
-    <p>If not redirected, click <a href="http://110.35.136.20:8000/accounts/login/">here</a>.</p>
+    <h2>Django Dashboard로 이동합니다</h2>
+    <p>자동으로 이동하지 않으면:</p>
+    <p>1. 아무 곳이나 클릭하거나</p>
+    <p>2. 아래 버튼을 클릭하세요</p>
+    
+    <button id="redirect-btn" onclick="window.location.href='http://110.35.136.20:8000/accounts/login/'">
+        ▶ Django 로그인 페이지로 이동
+    </button>
+    
+    <p style="margin-top: 30px; font-size: 12px; color: #666;">
+        또는 직접 접속: <a href="http://110.35.136.20:8000/accounts/login/">http://110.35.136.20:8000/accounts/login/</a>
+    </p>
 </body>
 </html>
